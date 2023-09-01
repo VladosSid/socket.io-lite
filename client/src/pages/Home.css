@@ -1,0 +1,85 @@
+.Home {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+}
+
+.Home-continer {
+  width: 500px;
+
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+}
+
+.Home__lable {
+  width: 100%;
+}
+
+.Home__input {
+  width: 100%;
+
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  
+  border: 1px solid #2d3ef9;
+  border-radius: 10px;
+
+  font-size: 24px;
+  text-align: center;
+
+  color: white;
+  background: rgb(124, 47, 248);
+
+  outline: none;
+
+  margin-bottom: 20px;
+
+  transition: all 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.Home__input:focus,
+.Home__input:hover {
+  -webkit-box-shadow: 0px 0px 14px 3px #2d3ef9;
+  -moz-box-shadow: 0px 0px 14px 3px #2d3ef9;
+  box-shadow: 0px 0px 14px 3px #2d3ef9;  
+  scale: 105%;
+}
+
+.Home__link {
+  width: 100%;
+}
+
+.Home__button {
+  width: 100%;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  font-size: 24px;
+  
+  color: aliceblue;
+  background: #282c34;
+  
+  border: 3px solid #2d3ef9;
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  -webkit-box-shadow: inset 0px 0px 27px 8px rgba(45,62,249,1);
+  -moz-box-shadow: inset 0px 0px 27px 8px rgba(45,62,249,1);
+  box-shadow: inset 0px 0px 27px 8px rgba(45,62,249,1);
+
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.Home__button:hover,
+.Home__button:focus {
+  -webkit-box-shadow: 0px 0px 27px 8px rgba(45,62,249,1);
+  -moz-box-shadow: 0px 0px 27px 8px rgba(45,62,249,1);
+  box-shadow: 0px 0px 27px 8px rgba(45,62,249,1);
+}
