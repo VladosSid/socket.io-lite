@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 
+
 import '../../pages/Chat.css'
 
 const ChatMessages = ({messages}) => {
-  const [currentUsername, setCurrentUsername] = useState(null)
 
+  const [currentUsername, setCurrentUsername] = useState(null)
   useEffect(() => {
     setCurrentUsername(localStorage.getItem('username'))
   }, [])
@@ -23,10 +24,10 @@ const ChatMessages = ({messages}) => {
                 </span>) :
                 null
               }
-              
+
               <span 
-                className={msg.owner === 'ADMIN' ? 'Chat-messages__text--admin' : `Chat-messages__text ${msg.owner === currentUsername ? 'Chat-messages__text--owner' : ''}`}>
-                  {msg.message}
+                className={msg.owner === 'ADMIN' ? `Chat-messages__text--admin ${msg.status ? msg.status === 'connected' ? 'connected' : 'disconnected' : null}` : `Chat-messages__text ${msg.owner === currentUsername ? 'Chat-messages__text--owner' : ''}`}>
+                  {msg.owner === 'ADMIN' ? (msg.nameUser === currentUsername ? 'You ' : msg.nameUser) + msg.message : msg.message}
               </span>
             </li>
           )

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import io from 'socket.io-client';
+
 
 import ChatMessages from '../components/Chat/ChatMessage'
 import ChatInput from '../components/Chat/ChatInput'
@@ -7,7 +9,9 @@ import Users from '../components/users/Users'
 
 import './Chat.css'
 
-const PageChat = ({ socket }) => {
+ const socket = io('https://api-chat-lite.onrender.com'); // Ваш сервер Socket.io https://api-chat-lite.onrender.com http://localhost:5050/
+
+const PageChat = () => {
   const [username, setUsername] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
@@ -17,20 +21,34 @@ const PageChat = ({ socket }) => {
     const userName = localStorage.getItem('username')
     setUsername(userName)
   }, [])
-
+  
   useEffect(() => {
+    console.log(socket);
     if (!username) return
-
+  
     socket.on('joinUser', data => {
       setMessages(data.messages)
       setUsers(data.members)
     })
     socket.emit('join', username)
-
+    
+    return () => {
+      socket.emit('ExitUser', username)
+    }
   }, [username])
-
+  
   socket.on('ADMIN', data => {
-    setMessages([...messages, data])
+    const { id, nameUser, message, owner, status, ROOMSMembers} = data
+    const messageAdmin = {
+      id,
+      nameUser, 
+      message, 
+      owner, 
+      status,
+    }
+
+    setMessages([...messages, messageAdmin])
+    setUsers(ROOMSMembers)
   })
 
   socket.on('messageUser', data => {
@@ -69,8 +87,8 @@ const PageChat = ({ socket }) => {
   )
 }
 
-PageChat.propTypes = {
-  socket: PropTypes.object,
-}
+// PageChat.propTypes = {
+//   socket: PropTypes.object,
+// }
 
 export default PageChat

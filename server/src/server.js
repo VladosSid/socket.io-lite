@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cors());
 
 const ROOMS = require('./data/dataChat');
-const { disconnect } = require("process");
+const { log } = require("console");
 
 let count = 1 
 io.on('connection', (socket) => {
@@ -38,11 +38,19 @@ io.on('connection', (socket) => {
     
     io.emit('joinUser', ROOMS)
 
-    socket.broadcast.emit('ADMIN', {
+    const adminData = {
       id: uuidv4(),
-      message: `${userName} conected for Chat.`,
+      nameUser: userName,
+      message: ` connected for Chat.`, 
       owner: "ADMIN",
-    })
+      status: 'connected',
+      ROOMSMembers: ROOMS.members
+    }
+
+    ROOMS.messages.push(adminData)
+
+    socket.broadcast.emit('ADMIN', adminData)
+    socket.emit('ADMIN', adminData)
   })
 
   // send message user
@@ -59,10 +67,55 @@ io.on('connection', (socket) => {
     // io.broadcast.emit('message', messageData)
   })
 
+  socket.on('ExitUser', data => {
+    console.log('EXIT', data);
+    count -= 1
+    console.log('disconnected', socket.client.id);
+
+    ROOMS.members = ROOMS.members.filter(user => user.id !== socket.client.id)
+    const adminData = {
+      id: uuidv4(),
+      nameUser: data,
+      message: ` desconected for Chat.`, 
+      owner: "ADMIN",
+      status: 'disconnected',
+      ROOMSMembers: ROOMS.members
+    }
+
+    ROOMS.messages.push(adminData)
+
+    socket.broadcast.emit('ADMIN', adminData)
+  })
+  
+
+  socket.on('ExidUser', data => {
+    console.log('DESCONN', data);
+  })
+
   socket.on('disconnect', () => {
     count -= 1
     console.log('disconnected', socket.client.id);
+
+    let nameUser = 'unknown user'
+
+    const index = ROOMS.members.findIndex(user => user.id === socket.client.id)
+    if (index !== -1) {
+      nameUser = ROOMS.members[index].name
+    }
+
     ROOMS.members = ROOMS.members.filter(user => user.id !== socket.client.id)
+    const adminData = {
+      id: uuidv4(),
+      nameUser,
+      message: ` desconected for Chat.`, 
+      owner: "ADMIN",
+      status: 'disconnected',
+      ROOMSMembers: ROOMS.members
+    }
+
+    ROOMS.messages.push(adminData)
+
+    socket.broadcast.emit('ADMIN', adminData)
   })
 });
 

@@ -46,12 +46,19 @@
 .Chat-messages__text--admin {
   color: white;
   font-size: 25px;
-  background: #025902;
   width: 100%;
   display: block;
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 10px;
+}
+
+.disconnected {
+  background: red;
+}
+
+.connected {
+  background: #025902;
 }
 
 .Chat-messages__text {
@@ -137,4 +144,19 @@
 .Chat-input__button:focus {
   background-color: rgb(45, 62, 249);
   color: white;
+}
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
 }

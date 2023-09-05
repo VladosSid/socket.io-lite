@@ -1,14 +1,14 @@
 import { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import { lazy } from 'react' 
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 import './App.css';
 
 const Home = lazy(() => import('./pages/Home'));
 const Chat = lazy(() => import('./pages/Chat'));
 
-const socket = io('http://localhost:5050/'); // Ваш сервер Socket.io
+//  const socket = io('https://api-chat-lite.onrender.com'); // Ваш сервер Socket.io https://api-chat-lite.onrender.com http://localhost:5050/
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
 
             <Route
               path='/chat'
-              element={<Chat socket={socket}/>}
+              element={<Chat />}
               />
           </Routes>
         </main>

@@ -8,7 +8,10 @@ const Home = () => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    setUsername(localStorage.getItem('username'))
+    const localName = localStorage.getItem('username')
+    if (localName) {
+      setUsername(localName)
+    }
   }, [])
 
   const handleEnterChat = () => {
