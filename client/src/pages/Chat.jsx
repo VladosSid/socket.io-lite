@@ -9,7 +9,13 @@ import Users from '../components/users/Users'
 
 import './Chat.css'
 
- const socket = io('https://api-chat-lite.onrender.com'); // Ваш сервер Socket.io https://api-chat-lite.onrender.com http://localhost:5050/
+// const socket = io('https://api-chat-lite.onrender.com');
+const socket = io('http://localhost:5050/', {
+  auth: {
+    name: "SUPER TESTER"
+  }
+});
+// Ваш сервер Socket.io https://api-chat-lite.onrender.com http://localhost:5050/
 
 const PageChat = () => {
   const [username, setUsername] = useState(null);
@@ -23,12 +29,12 @@ const PageChat = () => {
   }, [])
   
   useEffect(() => {
-    console.log(socket);
     if (!username) return
   
     socket.on('joinUser', data => {
       setMessages(data.messages)
       setUsers(data.members)
+      console.log('joinUser');
     })
     socket.emit('join', username)
     

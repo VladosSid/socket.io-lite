@@ -19,11 +19,10 @@ app.use(express.json());
 app.use(cors());
 
 const ROOMS = require('./data/dataChat');
-const { log } = require("console");
 
 let count = 1 
 io.on('connection', (socket) => {
-  console.log('connected', count, '-', socket.client.id);
+  console.log('connected', count, '-', socket.client.id, socket.handshake.auth.name);
   count += 1
 
   // connected user to socket
@@ -31,11 +30,12 @@ io.on('connection', (socket) => {
   
   // join user
   socket.on('join', userName => {
+    socket.handshake.auth.name = userName
     ROOMS.members.push({
       id: socket.client.id,
       name: userName
     })
-    
+
     io.emit('joinUser', ROOMS)
 
     const adminData = {
@@ -47,7 +47,7 @@ io.on('connection', (socket) => {
       ROOMSMembers: ROOMS.members
     }
 
-    ROOMS.messages.push(adminData)
+    // ROOMS.messages.push(adminData)
 
     socket.broadcast.emit('ADMIN', adminData)
     socket.emit('ADMIN', adminData)
@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
       ROOMSMembers: ROOMS.members
     }
 
-    ROOMS.messages.push(adminData)
+    // ROOMS.messages.push(adminData)
 
     socket.broadcast.emit('ADMIN', adminData)
   })
@@ -96,24 +96,17 @@ io.on('connection', (socket) => {
     count -= 1
     console.log('disconnected', socket.client.id);
 
-    let nameUser = 'unknown user'
-
-    const index = ROOMS.members.findIndex(user => user.id === socket.client.id)
-    if (index !== -1) {
-      nameUser = ROOMS.members[index].name
-    }
-
     ROOMS.members = ROOMS.members.filter(user => user.id !== socket.client.id)
     const adminData = {
       id: uuidv4(),
-      nameUser,
+      nameUser: socket.handshake.auth.name,
       message: ` desconected for Chat.`, 
       owner: "ADMIN",
       status: 'disconnected',
       ROOMSMembers: ROOMS.members
     }
 
-    ROOMS.messages.push(adminData)
+    // ROOMS.messages.push(adminData)
 
     socket.broadcast.emit('ADMIN', adminData)
   })
