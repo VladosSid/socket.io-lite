@@ -33,7 +33,6 @@ const PageChat = () => {
     socket.on('joinUser', data => {
       setMessages(data.messages)
       setUsers(data.members)
-      console.log('joinUser');
     })
     socket.emit('join', username)
     
