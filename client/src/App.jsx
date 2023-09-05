@@ -20,14 +20,13 @@ function App() {
           <Routes>
             <Route
               index
-              path='/home'
+              path='/'
               element={<Home />}
             />
-
             <Route
               path='/chat'
               element={<Chat />}
-              />
+            />
           </Routes>
         </main>
       </div>
