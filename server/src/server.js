@@ -22,7 +22,8 @@ const ROOMS = require('./data/dataChat');
 
 let count = 1 
 io.on('connection', (socket) => {
-  console.log('connected', count, '-', socket.client.id, socket.handshake.auth.name);
+  console.log('connected', count, '-', socket.client.id);
+  // socket.handshake.auth.name
   count += 1
 
   // connected user to socket

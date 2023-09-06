@@ -9,11 +9,13 @@ import Users from '../components/users/Users'
 
 import './Chat.css'
 
-const socket = io('https://api-chat-lite.onrender.com', {
-  // auth: {
-  //   name: "SUPER TESTER"
-  // }
-});
+const socket = io('https://api-chat-lite.onrender.com'
+// {
+//   auth: {
+//     name: "SUPER TESTER"
+//   }
+// }
+);
 // Server deployment https://api-chat-lite.onrender.com 
 // Local server http://localhost:5050/
 
