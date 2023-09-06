@@ -9,7 +9,7 @@ import Users from '../components/users/Users'
 
 import './Chat.css'
 
-const socket = io('https://api-chat-lite.onrender.com', {
+const socket = io('http://localhost:5050/', {
   auth: {
     name: "SUPER TESTER"
   }
